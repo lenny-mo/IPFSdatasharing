@@ -2,6 +2,8 @@
   "name": "hardhat-project",
   "dependencies": {
     "dotenv": "^16.0.3",
+    "eccrypto": "^1.1.6",
+    "ethereumjs-util": "^7.1.5",
     "web3.storage": "^4.5.4"
   },
   "devDependencies": {

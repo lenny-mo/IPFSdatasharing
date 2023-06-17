@@ -28,7 +28,6 @@ function readFile(filePath) {
 async function storeFile (file) {
   const client = makeStorageClient()
   const cid = await client.put([file])
-  console.log('stored file with cid:', cid)
   return cid
 }
 
@@ -36,4 +35,4 @@ async function storeFile (file) {
 module.exports = {
     storeFile,
     readFile,
-  };
+};

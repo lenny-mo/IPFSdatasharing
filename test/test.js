@@ -1,39 +1,42 @@
 const { expect } = require("chai");
-const { encryptAndUploadFile, getAESKey, getInitVector } = require('../utils/encrypt.js');
+const { encryptAndUploadFile, getEncryptedAESKey, getEncryptedInitVector, getOwnerAddr } = require('../utils/encrypt.js');
 
-// Test group: "Check CID"
+// Test group: "Check CID" can hold multiple tests related to the CIDStorageContract
 describe("Check CID", function() {
 
-    // Test case: "Should return the correct CID"
-    // 测试智能合约是否存储了正确的CID
     it("Should return the correct CID", async function() {
-        // 合约的部署
-        const CIDStorageContract = await ethers.getContractFactory("CIDStorageContract");
+        // 合约的部署, 默认会在contracts目录下寻找Solidity合约文件
+        const CIDStorageContract = await ethers.getContractFactory("StorageFile");
         const CIDStorage = await CIDStorageContract.deploy();
 
         // 上传本地的加密后文件CT，并且返回CID
         inputpath = './file4upload/test1';
-        outputpath = './file4upload/test3.enc';
-        expectedCid = await encryptAndUploadFile(inputpath, outputpath, getAESKey());
-        
-        // 把CID存储到智能合约
-        CIDStorage.setCID(expectedCid);
-        
-        // 使用智能合约public变量的默认get函数，从智能合约中读取CID
-        const actualCid = await CIDStorage.uploadedCID();
+        outputpath = './file4upload/test4.enc';
+        const fileCID = await encryptAndUploadFile(inputpath, outputpath);
 
-        // 判断合约中存储的CID是否和本地上传的CID一致
-        expect(actualCid).to.equal(expectedCid);
+        // 获取 owner addr
+        const CidOwnerAddr = await getOwnerAddr();
+        console.log('Owner address: ', CidOwnerAddr);
         
-        // 在本地对AES密钥信息进行非对称加密，并且把加密后的信息CT‘ 存储进智能合约
-        CIDStorage.setAESKey(getAESKey());
-        CIDStorage.setInitVector(getInitVector());
-        
-        // 使用智能合约public变量的默认get函数，从智能合约中读取AES密钥信息
-        
-        
-        
+        // 获取文件的AES key和initVector 
+        const EncryptedAESKey = await getEncryptedAESKey();
+
+        const EncryptedInitVector = await getEncryptedInitVector();
+
+        // 存储 data owner addr, 文件的CID，AES key，AES initVector
+        await CIDStorage.setCipherText(CidOwnerAddr, fileCID, EncryptedAESKey, EncryptedInitVector);
+        console.log("setCipherText() is called");
+
+        // 获取合约中存储的数据
+        await CIDStorage.getCipherText(CidOwnerAddr, fileCID).then((result) => {
+            let [uploadedAESKey, uploadedAESIV] = result;
+            console.log('合约中存储的AES key: ', uploadedAESKey);  
+            console.log(); 
+            console.log('合约中存储的AES initVector: ', uploadedAESIV);
+        });
+
     });
-
-    // TODO: 获取合约的CID，并且获取文件然后解密，判断解密后的文件是否和原文件一致
+    
 });
+
+

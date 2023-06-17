@@ -16,7 +16,6 @@ function uploadFile(path) {
   // Read the file and store it
   const file = readFile(filePath);
   let cid = storeFile(file);
-  console.log(`the file is stored with cid: ${cid}`);
 
   return cid; 
   
