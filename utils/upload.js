@@ -7,7 +7,7 @@ const {readFile, storeFile} = require('./web3storageAPI.js');
 function uploadFile(path) {
   const filePath = path;
 
-  // If the file path is not specified, print an error message and exit
+// If the file path is not specified, print an error message and exit
   if (!filePath) {
     console.error('file path is unavailable, you should check if the file exists');
     process.exit(1);
@@ -25,10 +25,10 @@ function uploadFile(path) {
 async function UploadFile2IPFS(filePath) {
   try {
     const cid = await uploadFile(filePath);
-    console.log('文件上传完成');
+    console.log('UploadFile2IPFS success');
     return cid;
   } catch (error) {
-    console.error('文件上传失败', error);
+    console.error('UploadFile2IPFS failed', error);
     throw error;
   }
 }
