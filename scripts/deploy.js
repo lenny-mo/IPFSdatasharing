@@ -7,8 +7,8 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address);
 
-  const ContractFactory = await hre.ethers.getContractFactory("YourContractName"); // 替换为您的合约名称
-  const contract = await ContractFactory.deploy(); // 如果您的构造函数需要参数，请在此处添加
+  const ContractFactory = await hre.ethers.getContractFactory("YourContractName"); 
+  const contract = await ContractFactory.deploy();
 
   console.log("Contract deployed to:", contract.address);
 }
