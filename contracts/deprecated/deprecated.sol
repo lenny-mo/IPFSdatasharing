@@ -14,8 +14,6 @@ contract deprecated {
     string public uploadedAESKey;
     string public uploadedAESIV;
     
-    
-
     // @cid: 是一个 string类型，声明为 calldata，意味着在函数中不能被修改
     // public 可以被外部调用
     function setCID(string calldata cid) public {
