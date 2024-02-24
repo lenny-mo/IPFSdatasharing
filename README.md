@@ -3,6 +3,13 @@
 ## Introduction
 The InterPlanetary File System (IPFS) has significantly transformed data storage and retrieval, offering decentralized solutions for managing data. However, a gap exists in its ability to support secure data sharing. This project introduces a novel scheme for secure, flexible, and decentralized data sharing in IPFS, leveraging blockchain technology and smart contracts.
 
+## Architecture
+架构图如下
+
+![image.png](https://raw.githubusercontent.com/lenny-mo/PictureUploadFolder/main/20240224175234.png)
+
+
+
 ## Key Features
 - **Decentralized File Systems**: Utilizes IPFS for decentralized data storage.
 - **Blockchain Integration**: Employs smart contracts for secure data transactions.
